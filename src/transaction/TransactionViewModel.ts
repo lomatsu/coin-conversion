@@ -7,6 +7,7 @@ export class TransactionViewModel {
 	originValue: number
   targetCurrency: string
   conversionRate: number
+  createdAt: Date
 
 	constructor(transaction: TransactionModel) {
 		this.id = transaction.id
@@ -15,5 +16,6 @@ export class TransactionViewModel {
     this.originValue = transaction.origin_value
     this.targetCurrency = transaction.target_currency
     this.conversionRate = transaction.conversion_rate
+    this.createdAt = new Date()
 	}
 }

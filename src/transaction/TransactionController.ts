@@ -82,21 +82,22 @@ export class TransactionController extends ControllerBase<ITransactionRepository
   public async save(req: Request, res: Response): Promise<void> {
     try {
       // originCurrency, originValue, targetCurrency, coinversionRate
-      const newTransaction = new TransactionModel(req.body);
-      const errors = newTransaction.validate();
+      const transactionModel = new TransactionModel(req.body);
+      const errors = transactionModel.validate();
       if (errors.length) {
         res.status(400).json({ message: errors[0] });
         return;
       }
       const { rates } = await checkExchangeRatesAPI();
-      console.log(rates);
-
-      const destinationValue = await this.convertValues(rates, newTransaction);
-      console.log("destinationValue", destinationValue);
-
-      const transactionViewModel = await this.repository.create(newTransaction);
-
-      res.json(transactionViewModel);
+      const destinationValue = this.convertValues(rates, transactionModel);
+      transactionModel.conversion_rate = destinationValue.rate;
+      const newTransaction = await this.repository.create(transactionModel);
+      const transactionViewModel = new TransactionViewModel(newTransaction);
+      const response = {
+        ...transactionViewModel,
+        destinationValue: destinationValue.result,
+      };
+      res.status(201).json(response);
     } catch (error) {
       errorResponse("Error on save transaction", error, 500, res, debug);
     }
@@ -158,10 +159,27 @@ export class TransactionController extends ControllerBase<ITransactionRepository
 
   public convertValues(currentRates: any, transaction: any) {
     if (transaction.origin_currency === "EUR") {
-      return transaction.origin_value * currentRates;
+      const rate = currentRates[transaction.target_currency];
+      const result = this.formatValue(transaction.origin_value * rate);
+      return { result, rate };
     }
+
     if (transaction.target_currency === "EUR") {
-      return transaction.origin_value / currentRates.targetCurrency;
+      const rate = currentRates[transaction.origin_currency];
+      const result = this.formatValue(transaction.origin_value / rate);
+      return { result, rate };
     }
+
+    let rate =
+      currentRates[transaction.target_currency] /
+      currentRates[transaction.origin_currency];
+
+    const result = this.formatValue(transaction.origin_value * rate);
+    rate = this.formatValue(rate);
+    return { result, rate };
+  }
+
+  public formatValue(value: number) {
+    return Math.floor(value * 100) / 100;
   }
 }

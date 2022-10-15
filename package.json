@@ -1,0 +1,39 @@
+{
+  "name": "coin-convert",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "NODE_ENV=production node ./dist/bin/www",
+    "start:dev": "node ./dist/bin/www",
+    "build": "rm -rf ./dist && ./node_modules/.bin/tsc -p tsconfig.json",
+    "test": "NODE_ENV=test ./node_modules/.bin/jest --testMatch **/*.test.ts --detectOpenHandles  --passWithNoTests",
+    "test:cov": "npx nyc mocha --parallel **/*.test.js",
+    "knex": "./node_modules/.bin/knex --knexfile ./src/config/knexfile.ts",
+    "knex:make:migrate": "npm run knex -- migrate:make",
+    "knex:migrate": "npm run knex -- migrate:latest",
+    "knex:make:seed": "npm run knex -- seed:make",
+    "knex:seed": "npm run knex -- seed:run",
+    "knex:migrate:rollback": "npm run knex migrate:rollback",
+    "knex:migrate:prod": "NODE_ENV=production npm run knex -- migrate:latest",
+    "knex:migrate:rollback:prod": "NODE_ENV=production npm run knex migrate:rollback"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "knex": "^2.3.0",
+    "knex-tiny-logger": "^2.1.0",
+    "lodash": "^4.17.21",
+    "node-fetch": "2.6.1",
+    "pg": "^8.8.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/debug": "^4.1.7",
+    "@types/express": "^4.17.14",
+    "@types/lodash": "^4.14.186",
+    "@types/node": "^18.8.5",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.8.4"
+  }
+}

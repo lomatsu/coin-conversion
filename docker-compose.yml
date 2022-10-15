@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  database:
+    image: "postgres:14.5-alpine"
+    container_name: coin-conversion-db
+    ports:
+      - "5432:5432"
+    volumes:
+      - coin-conversion-db-volume:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=coin-conversion
+      - POSTGRES_DB=coin-conversion
+      - POSTGRES_PASSWORD=1234@Mudar
+
+  coin-conversion-api:
+    image: coin-conversion-api:latest
+    container_name: coin-conversion-api
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 8080:8080
+    depends_on:
+      - database
+    environment:
+      - DB_HOST=database
+      - NODE_ENV=development
+      - CORS_ALLOWED=http://coin-conversion:8080,http://coin-conversion:3000,http://localhost:3000
+      - JWT_SECRET=s0m33Creth0lyC0d3&
+      - POSTGRES_DB=coin-conversion
+      - POSTGRES_USER=coin-conversion
+      - POSTGRES_PASSWORD=1234@Mudar
+      - PORT=8080
+
+volumes:
+  coin-conversion-db-volume:

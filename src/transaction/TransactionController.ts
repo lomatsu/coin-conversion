@@ -14,6 +14,62 @@ export class TransactionController extends ControllerBase<ITransactionRepository
   constructor(app: Application, repository: ITransactionRepository) {
     super(app, repository);
   }
+  public async getByUserId(req: Request, res: Response): Promise<void> {
+    try {
+      
+      let userId: string | number = req.params.userId as string;
+      if (!userId || +userId < 1) {
+        res.status(404).end();
+        return;
+      }
+      userId = parseInt(userId, 10);
+
+      let { page = 1, limit = 4 } = req.query as any;
+      const { sort = "id", direction = "asc" } = req.query as any;
+      limit = parseInt(limit, 10) || 10;
+      page = parseInt(page, 10) || 0;
+      if (page < 1) {
+        page = 1;
+      }
+      const options: IPageOptions<TransactionModel> = {
+        limit,
+        page: page - 1,
+        sort,
+        direction,
+      };
+      const { data: transactions, total } = await this.repository.getByUserId(
+        userId,
+        options
+      );
+      
+      const data = transactions.map(
+        (transaction) => new TransactionViewModel(transaction)
+      );
+      options.page = page;
+      const comparaTotal = options.page * options.limit;
+      let hasNext = false;
+      if (comparaTotal < total) {
+        hasNext = true;
+      }
+      const response = {
+        data,
+        page: options.page,
+        limit: options.limit,
+        direction: options.direction,
+        total: total,
+        hasNext: hasNext,
+      };
+      res.json(response);
+    } catch (error: any) {
+      errorResponse(
+        "Error on get paginated transactions",
+        error,
+        500,
+        res,
+        debug
+      );
+    }
+  }
   public async getById(req: Request, res: Response): Promise<void> {
     try {
       let transactionId: string | number = req.params.id as string;
@@ -141,6 +197,10 @@ export class TransactionController extends ControllerBase<ITransactionRepository
   }
 
   public async registerRoutes(): Promise<void> {
+    this.app.get(
+      `${TransactionController.baseRouter}/by-user/:userId`,
+      this.getByUserId.bind(this)
+    );
     this.app.get(TransactionController.baseRouter, this.getAll.bind(this));
     this.app.get(
       `${TransactionController.baseRouter}/:id`,

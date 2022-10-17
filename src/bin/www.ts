@@ -11,6 +11,7 @@
  import { AddressInfo } from "net"
 import { TransactionRepository } from "../repositories"
 import { registerTransactionRoutes } from "../routes"
+import debug from "debug"
  
  app.use("/api/health-check", (_: Request, res: Response) => {
    res.json({ message: "System OK", env: process.env.NODE_ENV })
@@ -110,6 +111,9 @@ registerTransactionRoutes(app, new TransactionRepository(knex))
  
  function onListening() {
    const addr: string | AddressInfo | null = server.address()
+   const bind =
+		typeof addr === "string" ? "pipe " + addr : "port " + (addr || {}).port
+	debug("Listening on " + bind)
  }
  
  export default app

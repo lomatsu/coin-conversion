@@ -1,4 +1,4 @@
-import dotenv from 'dotenv'
+const dotenv = require('dotenv')
 import { join } from "path"
 
 if (process.env.NODE_ENV !== "production")

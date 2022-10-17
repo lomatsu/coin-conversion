@@ -16,7 +16,6 @@ export class TransactionController extends ControllerBase<ITransactionRepository
   }
   public async getByUserId(req: Request, res: Response): Promise<void> {
     try {
-      
       let userId: string | number = req.params.userId as string;
       if (!userId || +userId < 1) {
         res.status(404).end();
@@ -41,7 +40,6 @@ export class TransactionController extends ControllerBase<ITransactionRepository
         userId,
         options
       );
-      
       const data = transactions.map(
         (transaction) => new TransactionViewModel(transaction)
       );
@@ -144,8 +142,12 @@ export class TransactionController extends ControllerBase<ITransactionRepository
         res.status(400).json({ message: errors[0] });
         return;
       }
-      const { rates } = await checkExchangeRatesAPI();
-      const destinationValue = this.convertValues(rates, transactionModel);
+      const dataAPI = await checkExchangeRatesAPI();
+      if (!dataAPI || dataAPI.success === false ) {
+        res.status(400).json({message: "Rates not found. Please try again later"})
+      }
+
+      const destinationValue = this.convertValues(dataAPI.rates, transactionModel);
       transactionModel.conversion_rate = destinationValue.rate;
       const newTransaction = await this.repository.create(transactionModel);
       const transactionViewModel = new TransactionViewModel(newTransaction);

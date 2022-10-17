@@ -15,6 +15,8 @@
     "knex": "./node_modules/.bin/knex --knexfile ./src/config/knexfile.ts",
     "knex:dev:migrate": "npm run knex -- migrate:latest",
     "knex:dev:seed": "npm run knex -- seed:run",
+    "knex:prod:migrate": "npm run knex -- migrate:latest",
+    "knex:prod:seed": "npm run knex -- seed:run",
     "knex:make:migrate": "npm run knex -- migrate:make",
     "knex:make:seed": "npm run knex -- seed:make",
     "knex:seed": "npm run knex -- seed:run",

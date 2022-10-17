@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import express, { Request } from "express";
+import cookieParser from "cookie-parser"
 import cors from "cors";
 import logger from "morgan";
 dotenv.config();
@@ -20,6 +21,8 @@ const corsOptionsDelegate = function (
 app.use(cors(corsOptionsDelegate));
 app.use(logger("dev"))
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }))
+app.use(cookieParser())
 app.use(express.urlencoded({ extended: false }));
 
 export default app;

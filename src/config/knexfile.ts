@@ -43,17 +43,22 @@ module.exports = {
 		},
 	},
 	production: {
-		client: "pg",
-		connection,
-		pool: {
-			min: 2,
-			max: 10,
-		},
-		migrations: {
-			directory: "../../dist/database/migrations",
-		},
-		seeds: {
-			directory: "../../dist/database/seeds",
-		},
-	},
+    client: 'pg',
+    connection: {
+      port: process.env.DB_PORT,
+      host: process.env.DB_HOST,
+      database: process.env.POSTGRES_DB,
+      user: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
+      ssl: {
+        rejectUnauthorized: false,
+      }
+    },
+    migrations: {
+      directory: "../database/migrations",
+    },
+    seeds: {
+      directory: "../database/seeds",
+    },
+  },
 }

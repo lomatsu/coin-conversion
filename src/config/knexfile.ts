@@ -1,4 +1,4 @@
-import * as dotenv from "dotenv"
+import dotenv from 'dotenv'
 import { join } from "path"
 
 if (process.env.NODE_ENV !== "production")

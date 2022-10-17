@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
+    "prestart": "npm run seed:migration:prod",
     "prestart:dev": "npm run seed:migration:dev",
     "start:dev": "node ./dist/bin/www",
     "start": "NODE_ENV=production node ./dist/bin/www",

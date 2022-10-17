@@ -1,5 +1,5 @@
 const dotenv = require('dotenv')
-import { join } from "path"
+const { join } = require("path")
 
 if (process.env.NODE_ENV !== "production")
 	dotenv.config({ path: join(__dirname, "../..", ".env") })

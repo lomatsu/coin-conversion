@@ -1,16 +1,15 @@
 import { Knex } from "knex"
 import { tableName } from "../helps"
-import { UserModel } from "../model"
 
 export async function seed(knex: Knex): Promise<void> {
 	try {
-		const data = await knex<UserModel>(tableName.USERS).select("*").first()
+		const data = await knex<any>(tableName.USERS).select("*").first()
 		if (data) {
 			console.log("Skipping seed table ", tableName.USERS)
 			return
 		}
 		// Inserts seed entries
-		await knex<UserModel>(tableName.USERS).insert([
+		await knex<any>(tableName.USERS).insert([
 			{
 				name: "Lauro Omatsu",
 			},

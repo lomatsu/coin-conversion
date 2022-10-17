@@ -7,8 +7,6 @@ export class TransactionModel extends ModelBase {
 	origin_value: number
   target_currency: string
   conversion_rate: number
-  validationErrorMessages: string[] = []
-  
 
 	constructor(params: TransactionViewModel) {
 		super(params as any)

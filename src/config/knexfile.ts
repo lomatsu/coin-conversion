@@ -1,8 +1,5 @@
-const dotenv = require('dotenv')
-const { join } = require("path")
-
-if (process.env.NODE_ENV !== "production")
-	dotenv.config({ path: join(__dirname, "../..", ".env") })
+import dotenv from 'dotenv'
+dotenv.config({ path: "../../.env" })
 
 import { DB_HOST, DB_NAME, DB_PASSWORD, DB_USER } from "./index"
 

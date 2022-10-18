@@ -7,17 +7,17 @@ Ambientes:
 - Production - [https://coin-conversion.herokuapp.com/api/](https://coin-conversion.herokuapp.com/api/)
 - Local - [http://localhost:3000/api/](http://localhost:3000/api/)
 
+## Contents
+
+- [coin-conversion (Back-end)](#coin-conversion-back-end)
+  - [Contents](#contents)
+  - [Endpoints Documentation](#endpoints-documentation)
+  - [Structure](#structure)
+  - [Usage](#usage)
 ## Endpoints Documentation
 
 - Production - [https://coin-conversion.herokuapp.com/api-docs/](https://coin-conversion.herokuapp.com/api-docs/)
 - Local - [http://localhost:3000/api-docs/](http://localhost:3000/api-docs/)
-## Contents
-
-- [coin-conversion (Back-end)](#coin-conversion-back-end)
-  - [Endpoints Documentation](#endpoints-documentation)
-  - [Contents](#contents)
-  - [Structure](#structure)
-  - [Usage](#usage)
 
 ## Structure
 

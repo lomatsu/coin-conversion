@@ -1,0 +1,255 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Coin Conversion API",
+    "description": "O coin-conversion consulta a api Exchange Rates [https://apilayer.com/marketplace/exchangerates_data-api#details-tab] com a finalidade de obter as taxas de cambio atuais para que o usuário converta o valor da moeda que desejar em tempo real.",
+    "termsOfService": "http://localhost/terms",
+    "contact": {
+      "email": "lauroomatsu@gmail.com",
+      "whatsap": "(24)981174035"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api",
+      "description": "API de teste"
+    },
+    {
+      "url": "https://coin-conversion.herokuapp.com/api/",
+      "description": "API de produção"
+    }
+  ],
+  "paths": {
+    "/transactions/": {
+      "post": {
+        "summary": "Transaction registration",
+        "description": "This route will be responsible for registering a new transaction ",
+        "tag": ["Transactions"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Transaction"
+                },
+                "examples": {
+                  "transaction": {
+                    "value": {
+                      "userId": 1,
+                      "originCurrency": "BRL",
+                      "originValue": 100,
+                      "targetCurrency": "USD"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "400": {
+              "description": "Fields are required"
+            },
+            "201": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "$ref":"#/components/schemas/Transaction"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Error: Internal Server Error"
+            }
+          }
+        },
+        "get": {
+          "summary": "Get all transactions",
+          "description": "This route will be responsible for return all recorded transactions ",
+          "tag": ["Transactions"],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema":{
+                    "type": "object",
+                    "$ref":"#/components/schemas/Transaction"
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Error: Internal Server Error"
+            }
+          }
+        }
+      },
+      "/transactions/{id}": {
+        "get": {
+          "summary": "Get transaction by id",
+          "description": "This route will be responsible for return transaction by id ",
+          "tag": ["Transactions"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "Id transaction for search"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema":{
+                    "type": "object",
+                    "$ref":"#/components/schemas/Transaction"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found"
+            },
+            "500": {
+              "description": "Error: Internal Server Error"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update transaction",
+          "description": "This route will be responsible for update transaction",
+          "tag": ["Transactions"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "Id transaction for update"
+            }
+          ],
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Transaction"
+                  },
+                  "examples": {
+                    "transaction": {
+                      "value": {
+                        "userId": 1,
+                        "originCurrency": "EUR",
+                        "originValue": 200,
+                        "targetCurrency": "JPY"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema":{
+                    "type": "object",
+                    "$ref":"#/components/schemas/Transaction"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found"
+            },
+            "500": {
+              "description": "Error: Internal Server Error"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete transaction by id",
+          "description": "This route will be responsible for delete transaction by id ",
+          "tag": ["Transactions"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "Id transaction for delete"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema":{
+                    "type": "object"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found"
+            },
+            "500": {
+              "description": "Error: Internal Server Error"
+            }
+          }
+        }
+      },
+      "/transactions/by-user/{userId}": {
+        "get": {
+          "summary": "Get transactions by user id",
+          "description": "This route will be responsible for return transactions by user id ",
+          "tag": ["Transactions"],
+          "parameters": [
+            {
+              "name": "userId",
+              "in": "path",
+              "description": "User ID for search"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "content": {
+                "application/json": {
+                  "schema":{
+                    "type": "array",
+                    "$ref":"#/components/schemas/Transaction"
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found"
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "Transaction": {
+          "type": "object",
+          "properties": {
+            "userId": {
+              "type": "number"
+            },
+            "originCurrency": {
+              "type": "string"
+            },
+            "originValue": {
+              "type": "number"
+            },
+            "targetCurrency": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+}

@@ -1,16 +1,21 @@
 # coin-conversion (Back-end)
 
-O [coin-conversion] é que consulta a api Exchange Rates [https://apilayer.com/marketplace/exchangerates_data-api#details-tab] com a finalidade de obter as taxas de cambio atuais para que o usuário converta o valor da moeda que desejar em tempo real.
+O [coin-conversion] consulta a api Exchange Rates [https://apilayer.com/marketplace/exchangerates_data-api#details-tab] com a finalidade de obter as taxas de cambio atuais para que o usuário converta o valor da moeda que desejar em tempo real.
 
 Ambientes:
 
-- Production - []()
-- Local - [http://localhost:3000/api/](http://localhost:3000/api/)
+- Production - [https://coin-conversion.herokuapp.com/api-docs/](https://coin-conversion.herokuapp.com/api-docs/)
+- Local - [http://localhost:3000/api-docs/](http://localhost:3000/api-docs/)
 
+## Endpoints Documentation
+
+- Production - [https://coin-conversion.herokuapp.com/api/](https://coin-conversion.herokuapp.com/api/)
+- Local - [http://localhost:3000/api/](http://localhost:3000/api/)
 
 ## Contents
 
 - [coin-conversion (Back-end)](#coin-conversion-back-end)
+  - [Endpoints Documentation](#endpoints-documentation)
   - [Contents](#contents)
   - [Structure](#structure)
   - [Usage](#usage)

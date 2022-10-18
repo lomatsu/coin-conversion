@@ -9,14 +9,25 @@ dotenv.config();
 
 const app = express();
 
+const corsAllowed = (process.env.CORS_ALLOWED || "").split(",")
+const allowList = [
+	"https://coin-conversion.herokuapp.com",
+	...corsAllowed,
+]
+
 const corsOptionsDelegate = function (
-  _req: Request,
+  req: Request,
   callback: (error: Error | null, options: any) => void
 ) {
   if (process.env.NODE_ENV !== "production") {
     return callback(null, { origin: true });
   }
   let corsOptions = { origin: true };
+  if (
+		allowList.indexOf(req.header("Origin") as string) !== -1
+	) {
+		corsOptions = { origin: true }
+	}
   callback(null, corsOptions);
 };
 

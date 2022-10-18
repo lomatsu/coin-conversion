@@ -3,6 +3,8 @@ import express, { Request } from "express";
 import cookieParser from "cookie-parser"
 import cors from "cors";
 import logger from "morgan";
+import swaggerUI from 'swagger-ui-express'
+import swaggerDocs from './swagger.json'
 dotenv.config();
 
 const app = express();
@@ -23,6 +25,7 @@ app.use(logger("dev"))
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs))
 app.use(express.urlencoded({ extended: false }));
 
 export default app;

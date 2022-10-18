@@ -4,14 +4,13 @@ O [coin-conversion] consulta a api Exchange Rates [https://apilayer.com/marketpl
 
 Ambientes:
 
-- Production - [https://coin-conversion.herokuapp.com/api-docs/](https://coin-conversion.herokuapp.com/api-docs/)
-- Local - [http://localhost:3000/api-docs/](http://localhost:3000/api-docs/)
-
-## Endpoints Documentation
-
 - Production - [https://coin-conversion.herokuapp.com/api/](https://coin-conversion.herokuapp.com/api/)
 - Local - [http://localhost:3000/api/](http://localhost:3000/api/)
 
+## Endpoints Documentation
+
+- Production - [https://coin-conversion.herokuapp.com/api-docs/](https://coin-conversion.herokuapp.com/api-docs/)
+- Local - [http://localhost:3000/api-docs/](http://localhost:3000/api-docs/)
 ## Contents
 
 - [coin-conversion (Back-end)](#coin-conversion-back-end)

@@ -114,19 +114,27 @@ export class TransactionRepository implements ITransactionRepository {
       .into(tableName.TRANSACTIONS)
       .then((d) => d[0]);
   }
-  update(data: Partial<TransactionModel>): Promise<TransactionModel> {
+  async update(data: Partial<TransactionModel>): Promise<TransactionModel> {
     if (!data.getDataToSave) {
       throw new Error(
         "Incomplete implementation model. Missing [getDataToSave] function"
       );
     }
+    const model = await this.getById(data.id!)
+		if (!model) {
+			throw new Error("Transaction not found")
+		}
     return this.db
       .update(data.getDataToSave(), "*")
       .into(tableName.TRANSACTIONS)
       .where("id", data.id)
       .then((d) => d[0]);
   }
-  delete(id: number): Promise<boolean> {
+  async delete(id: number): Promise<boolean> {
+    const model = await this.getById(id)
+		if (!model) {
+			throw new Error("Transaction not found")
+		}
     return this.db.from(tableName.TRANSACTIONS).where("id", id).delete();
   }
 }
